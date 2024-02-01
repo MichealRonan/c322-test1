@@ -2,6 +2,7 @@ package edu.iu.c322.test1.controllers;
 
 import edu.iu.c322.test1.model.Question;
 import edu.iu.c322.test1.repository.FileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,14 @@ import java.util.List;
 @RequestMapping("/questions")
 public class QuestionController {
 
+    @Autowired
     private FileRepository fileRepository;
 
     public QuestionController(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
     }
 
-
+    @PostMapping("/add")
     public boolean add(@RequestBody Question question) {
         try {
             return fileRepository.add(question);

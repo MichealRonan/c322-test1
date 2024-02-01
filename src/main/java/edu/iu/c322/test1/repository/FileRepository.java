@@ -2,6 +2,7 @@ package edu.iu.c322.test1.repository;
 
 import edu.iu.c322.test1.model.Question;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -13,16 +14,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class FileRepository {
-    private String IMAGES_FOLDER_PATH = "quizzes/questions/images/";
+    private final String IMAGES_FOLDER_PATH = "quizzes/questions/images/";
     private static final String NEW_LINE = System.lineSeparator();
-    private static final String QUESTION_DATABASE_NAME = "questions.txt";
+    private static final String QUESTION_DATABASE_NAME = "questions-test.txt";
 
     private static void appendToFile(Path path, String content)
             throws IOException {
-        Files.write(path,
-                content.getBytes(StandardCharsets.UTF_8),
+        Files.writeString(path,
+                content,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND);
     }
@@ -85,8 +86,7 @@ public class FileRepository {
         String fileExtension = ".png";
         Path path = Paths.get(IMAGES_FOLDER_PATH
                 + id + fileExtension);
-        byte[] image = Files.readAllBytes(path);
-        return image;
+        return Files.readAllBytes(path);
     }
 
 }
